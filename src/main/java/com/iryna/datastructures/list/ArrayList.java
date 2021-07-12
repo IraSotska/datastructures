@@ -1,5 +1,6 @@
 package com.iryna.datastructures.list;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -8,7 +9,6 @@ public class ArrayList implements Iterable<Object> {
     private int arraySize = 5;
     private int lastIndex;
     private Object[] array = new Object[arraySize];
-
 
     public int size() {
         return lastIndex;
@@ -20,64 +20,66 @@ public class ArrayList implements Iterable<Object> {
 
     public boolean contains(Object o) {
         for (int i = 0; i < lastIndex; i++) {
-            if(array[i].equals(o)) {
+            if (array[i].equals(o)) {
                 return true;
             }
         }
         return false;
     }
 
-    public boolean add(Object o) {
+    public void add(Object o) {
         checkArraySize();
         array[lastIndex] = o;
         lastIndex++;
-        return false;
     }
 
     private void checkArraySize() {
-        if(lastIndex + 1 > arraySize) {
+        if (lastIndex + 1 > arraySize) {
             Object[] newArray = new Object[arraySize * 2];
             System.arraycopy(array, 0, newArray, 0, arraySize);
-            arraySize *= 2;
+            arraySize *= 1.5;
             array = newArray;
         }
     }
 
-    public Object[] remove(Object o) {
+    public void remove(Object o) {
         int indexForRemove = indexOf(o);
 
         Object[] elementsAfterIndex= new Object[lastIndex - indexForRemove];
         System.arraycopy(array, indexForRemove + 1, elementsAfterIndex, 0, lastIndex - indexForRemove);
         System.arraycopy(elementsAfterIndex, 0, array, indexForRemove, lastIndex - indexForRemove);
         lastIndex--;
-        return array;
     }
 
     public void clear() {
-        for (int i = 0; i < array.length; i++) {
-            array[i] = null;
-        }
+        Arrays.fill(array, null);
         lastIndex = 0;
     }
 
     public Object get(int index) {
-        return array[index];
+        if ((index <= lastIndex) && (index > -1))  {
+            return array[index];
+        }
+        throw new IndexOutOfBoundsException();
     }
 
     public void set(int index, Object element) {
-        array[index] = element;
+        if ((index <= lastIndex) && (index > -1)) {
+            array[index] = element;
+        }
+        new IndexOutOfBoundsException();
     }
 
-    public Object[] add(int index, Object element) {
+    public void add(int index, Object element) {
 
-        if(index <= lastIndex) {
+        if ((index <= lastIndex) && (index > -1)) {
             checkArraySize();
 
             Object[] elementsAfterIndex= new Object[lastIndex - index + 1];
             System.arraycopy(array, index, elementsAfterIndex, 0, lastIndex - index);
             array[index] = element;
             System.arraycopy(elementsAfterIndex, 0, array, index + 1, lastIndex - index);
-            return array;
+            lastIndex++;
         }
         else {
             throw new IndexOutOfBoundsException();
@@ -86,11 +88,20 @@ public class ArrayList implements Iterable<Object> {
 
     public int indexOf(Object o) {
         for (int i = 0; i < array.length; i++) {
-            if(array[i].equals(o)) {
+            if (array[i].equals(o)) {
                 return i;
             }
         }
-        return 0;
+        throw new NullPointerException();
+    }
+
+    public int lastIndexOf(Object o) {
+        for (int i = lastIndex - 1; i > 0; i--) {
+            if (array[i].equals(o)) {
+                return i;
+            }
+        }
+        throw new NullPointerException();
     }
 
     @Override
@@ -102,15 +113,15 @@ public class ArrayList implements Iterable<Object> {
 
             @Override
             public boolean hasNext() {
-                System.out.println(currentIndex<lastIndex);
                 return currentIndex < lastIndex;
             }
 
             @Override
             public Object next() {
-                if(currentIndex < lastIndex) {
+                if (currentIndex < lastIndex) {
+                    Object currentObject = array[currentIndex];
                     currentIndex++;
-                    return array[currentIndex];
+                    return currentObject;
                 }
                 throw new NoSuchElementException();
             }
@@ -118,16 +129,12 @@ public class ArrayList implements Iterable<Object> {
             public void remove() {
 
                 Object[] elementsAfterIndex= new Object[lastIndex - currentIndex];
-                System.arraycopy(array, currentIndex + 1, elementsAfterIndex, 0, lastIndex - currentIndex);
-                System.arraycopy(elementsAfterIndex, 0, array, currentIndex, lastIndex - currentIndex);
+                System.arraycopy(array, currentIndex, elementsAfterIndex, 0, lastIndex - currentIndex);
+                System.arraycopy(elementsAfterIndex, 0, array, currentIndex -1, lastIndex - currentIndex);
+                array[lastIndex - 1] = null;
                 lastIndex--;
-
-                for (int i = 0; i < array.length; i++) {
-                    System.out.println(array[i]);
-                }
             }
         };
-
         return arrayIterator;
     }
 }
