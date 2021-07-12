@@ -7,12 +7,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ArrayListTest {
 
-    private ArrayList arrayList;
-
     @Test
     void arraySizeTest() {
 
-        arrayList = new ArrayList();
+        ArrayList<String> arrayList = new ArrayList<>();
         arrayList.add("Elem 1");
         arrayList.add("Elem 2");
         arrayList.add("Elem 3");
@@ -21,13 +19,13 @@ class ArrayListTest {
 
     @Test
     void isEmptyTest() {
-        arrayList = new ArrayList();
+        ArrayList<String> arrayList = new ArrayList<>();
         assertTrue(arrayList.isEmpty());
     }
 
     @Test
     void contains() {
-        arrayList = new ArrayList();
+        ArrayList<String> arrayList = new ArrayList<>();
         arrayList.add("a");
         arrayList.add("c");
         arrayList.add("b");
@@ -36,33 +34,33 @@ class ArrayListTest {
 
     @Test
     void addElementsTest() {
-        arrayList = new ArrayList();
-        arrayList.add("a");
+        ArrayList<Integer> arrayList = new ArrayList<>();
+        arrayList.add(13);
         arrayList.add(12);
-        arrayList.add('c');
-        arrayList.add(true);
-        assertEquals("a", arrayList.get(0));
+        arrayList.add(0);
+        arrayList.add(34);
+        assertEquals(13, arrayList.get(0));
         assertEquals(12, arrayList.get(1));
-        assertEquals('c', arrayList.get(2));
-        assertEquals(true, arrayList.get(3));
+        assertEquals(0, arrayList.get(2));
+        assertEquals(34, arrayList.get(3));
     }
 
     @Test
     void removeElementTest() {
-        arrayList = new ArrayList();
+        ArrayList<Integer> arrayList = new ArrayList<>();
         arrayList.add(1);
         arrayList.add(2);
         arrayList.add(8);
-        arrayList.add("A");
+        arrayList.add(13);
         arrayList.remove(2);
         assertFalse(arrayList.contains(2));
-        arrayList.remove("A");
-        assertFalse(arrayList.contains("A"));
+        arrayList.remove(13);
+        assertFalse(arrayList.contains(13));
     }
 
     @Test
     void clearArrayTest() {
-        arrayList = new ArrayList();
+        ArrayList<String> arrayList = new ArrayList<>();
         arrayList.add("t");
         arrayList.add("c");
         arrayList.clear();
@@ -72,7 +70,7 @@ class ArrayListTest {
     @Test
     void iterateEachElementTest() {
 
-        arrayList = new ArrayList();
+        ArrayList<Integer> arrayList = new ArrayList<>();
         arrayList.add(1);
         arrayList.add(2);
         arrayList.add(3);
@@ -88,7 +86,7 @@ class ArrayListTest {
     @Test
     void removeElementWhileIteratingTest() {
 
-        arrayList = new ArrayList();
+        ArrayList<Integer> arrayList = new ArrayList<>();
         arrayList.add(8);
         arrayList.add(2);
         arrayList.add(3);
@@ -108,7 +106,7 @@ class ArrayListTest {
 
     @Test
     void getElementsFromEmptyCollectionTest() {
-        arrayList = new ArrayList();
+        ArrayList<String> arrayList = new ArrayList();
         assertThrows(NoSuchElementException.class, () -> {
             arrayList.iterator().next();
         });
@@ -116,25 +114,25 @@ class ArrayListTest {
 
     @Test
     void checkNextElementAtEmptyCollectionTest() {
-        arrayList = new ArrayList();
+        ArrayList<String> arrayList = new ArrayList<>();
         assertFalse(arrayList.iterator().hasNext());
     }
 
     @Test
     void getElementFromListTest() {
-        arrayList = new ArrayList();
+        ArrayList<String> arrayList = new ArrayList<>();
         arrayList.add("097");
-        arrayList.add(true);
-        arrayList.add('h');
+        arrayList.add("");
+        arrayList.add("k");
         assertEquals("097", arrayList.get(0));
-        assertEquals(true, arrayList.get(1));
-        assertEquals('h', arrayList.get(2));
+        assertEquals("", arrayList.get(1));
+        assertEquals("k", arrayList.get(2));
     }
 
     @Test
     void setElementAtListTest() {
-        arrayList = new ArrayList();
-        arrayList.add("123");
+        ArrayList<Integer> arrayList = new ArrayList();
+        arrayList.add(12);
         arrayList.add(123);
         arrayList.set(1, 1234);
         assertEquals(1234, arrayList.get(1));
@@ -142,18 +140,18 @@ class ArrayListTest {
 
     @Test
     void indexOfElementTest() {
-        arrayList = new ArrayList();
+        ArrayList<String> arrayList = new ArrayList<>();
         arrayList.add("1");
-        arrayList.add(1);
-        arrayList.add('1');
-        assertEquals(2, arrayList.indexOf('1'));
+        arrayList.add("3");
+        arrayList.add("34");
+        assertEquals(2, arrayList.indexOf("34"));
     }
 
     @Test
     void lastIndexOfTest() {
-        arrayList = new ArrayList();
+        ArrayList<Integer> arrayList = new ArrayList<>();
         arrayList.add(1);
-        arrayList.add("1");
+        arrayList.add(2);
         arrayList.add(1);
         arrayList.add(1);
         assertEquals(3, arrayList.lastIndexOf(1));
@@ -161,7 +159,7 @@ class ArrayListTest {
 
     @Test
     void addElementForIndex() {
-        arrayList = new ArrayList();
+        ArrayList<Integer> arrayList = new ArrayList<>();
         arrayList.add(0);
         arrayList.add(2);
         arrayList.add(4);
@@ -173,7 +171,7 @@ class ArrayListTest {
 
     @Test
     void addElementForIndexIndexOutOfRangeException() {
-        arrayList = new ArrayList();
+        ArrayList<Integer> arrayList = new ArrayList();
         assertThrows(IndexOutOfBoundsException.class, () -> {
             arrayList.add(2, 1);
         });
