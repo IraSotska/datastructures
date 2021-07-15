@@ -1,6 +1,6 @@
 package com.iryna.datastructures.list;
 
-import org.junit.jupiter.api.Test;
+import  org.junit.jupiter.api.Test;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -57,11 +57,9 @@ class LinkedListTest {
         linkedList.add(2);
         linkedList.add(8);
         linkedList.add("A");
-        linkedList.remove(2);
-        assertFalse(linkedList.contains(2));
-        linkedList.remove("A");
+        linkedList.remove(3);
         assertFalse(linkedList.contains("A"));
-        linkedList.remove(1);
+        linkedList.remove(0);
         assertFalse(linkedList.contains(1));
     }
 
@@ -141,7 +139,7 @@ class LinkedListTest {
         linkedList = new LinkedList();
         linkedList.add("123");
         linkedList.add(123);
-        linkedList.set(1, 1234);
+        linkedList.set(1234, 1);
         assertEquals(1234, linkedList.get(1));
     }
 
@@ -171,7 +169,7 @@ class LinkedListTest {
         linkedList.add(2);
         linkedList.add(4);
         linkedList.add(8);
-        linkedList.add(3, 6);
+        linkedList.add(6, 3);
         assertEquals(6, linkedList.get(3));
         assertEquals(5, linkedList.size());
     }

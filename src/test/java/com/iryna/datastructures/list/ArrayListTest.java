@@ -52,10 +52,10 @@ class ArrayListTest {
         arrayList.add(2);
         arrayList.add(8);
         arrayList.add(13);
+        arrayList.remove(0);
+        assertFalse(arrayList.contains(1));
         arrayList.remove(2);
-        assertFalse(arrayList.contains(2));
-        arrayList.remove(13);
-        assertFalse(arrayList.contains(13));
+        assertFalse(arrayList.contains(8));
     }
 
     @Test

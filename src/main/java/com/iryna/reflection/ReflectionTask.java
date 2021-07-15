@@ -1,14 +1,11 @@
 package com.iryna.reflection;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.lang.reflect.*;
 
 public class ReflectionTask {
 
-    public Object createObjectByClass(Class c) throws InvocationTargetException, InstantiationException, IllegalAccessException {
-        for (Constructor currentConstructor: c.getDeclaredConstructors()) {
+    public Object createObjectByClass(Class clazz) throws InvocationTargetException, InstantiationException, IllegalAccessException {
+        for (Constructor currentConstructor: clazz.getDeclaredConstructors()) {
             if (currentConstructor.getParameterCount() == 0) {
                 return currentConstructor.newInstance();
             }
@@ -16,18 +13,18 @@ public class ReflectionTask {
         return null;
     }
 
-    public void callAllMethodsWithoutParametersForObject(Object object) throws InvocationTargetException, IllegalAccessException, InstantiationException {
+    public void callAllMethodsWithoutParametersForObject(Object object) throws InvocationTargetException, IllegalAccessException {
         for (Method method: object.getClass().getDeclaredMethods()) {
             if (method.getParameterCount() == 0) {
                 method.setAccessible(true);
-                method.invoke(object.getClass().newInstance());
+                method.invoke(object);
             }
         }
     }
 
     public void printFinalMethodsSignatureForObject(Object object) {
         for (Method method: object.getClass().getDeclaredMethods()) {
-            if (method.getModifiers() == 18) {
+            if (Modifier.FINAL == method.getModifiers()) {
                 System.out.println(method.getName());
             }
         }
@@ -35,7 +32,7 @@ public class ReflectionTask {
 
     public void printNotPublicMethodsForClass(Class c) {
         for (Method method: c.getDeclaredMethods()) {
-            if (method.getModifiers() != 1) {
+            if (Modifier.PUBLIC != method.getModifiers()) {
                 System.out.println(method.getName() + " " + method.getModifiers());
             }
         }
@@ -52,16 +49,13 @@ public class ReflectionTask {
         for (Field field: object.getClass().getDeclaredFields()) {
             if (field.getModifiers() == 2) {
                 field.setAccessible(true);
-                String fieldType =  field.getType().getName();
+                Class fieldType =  field.getType();
 
-                if ((fieldType.equals("int")) || (fieldType.equals("byte")) || (fieldType.equals("long"))) {
+                if ((fieldType == int.class) || (fieldType == byte.class) || (fieldType == long.class)) {
                     field.set(object, 0);
                 }
-                else if (fieldType.equals("double")) {
-                    field.setDouble(object, 0.0d);
-                }
-                else if (fieldType.equals("float")) {
-                    field.setFloat(object, 0.0f);
+                else if ((fieldType == double.class) || fieldType == float.class) {
+                    field.set(object, 0.0);
                 }
                 else {
                     field.set(object, null);
