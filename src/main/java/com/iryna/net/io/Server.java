@@ -1,4 +1,4 @@
-package com.iryna.datastructures.net.io;
+package com.iryna.net.io;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
