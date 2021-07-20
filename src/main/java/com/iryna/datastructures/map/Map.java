@@ -1,8 +1,8 @@
-package com.iryna.datastructures.list;
+package com.iryna.datastructures.map;
 
 import java.util.Iterator;
 
-public interface Map<K, V> extends Iterable {
+public interface Map<K, V> extends Iterable<V> {
     V put(K key, V value);
 
     V get(K key);

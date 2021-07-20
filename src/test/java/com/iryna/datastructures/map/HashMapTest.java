@@ -1,4 +1,4 @@
-package com.iryna.datastructures.list;
+package com.iryna.datastructures.map;
 
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
@@ -7,10 +7,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class HashMapTest {
 
-    private HashMap<Integer, String> hashMap = new HashMap<>();
-
     @Test
     void put() {
+
+        HashMap<Integer, String> hashMap = new HashMap<>();
+
         assertEquals("Val", hashMap.put(1, "Val"));
         assertEquals("Val2", hashMap.put(3, "Val2"));
         assertEquals("Val3", hashMap.put(4, "Val3"));
@@ -21,6 +22,7 @@ class HashMapTest {
 
     @Test
     void get() {
+        HashMap<Integer, String> hashMap = new HashMap<>();
         hashMap.put(1, "v1");
         hashMap.put(2, "v2");
         hashMap.put(3, "v3");
@@ -31,6 +33,7 @@ class HashMapTest {
 
     @Test
     void containsKey() {
+        HashMap<Integer, String> hashMap = new HashMap<>();
         hashMap.put(1, "v1");
         assertTrue(hashMap.containsKey(1));
         assertFalse(hashMap.containsKey(2));
@@ -38,6 +41,7 @@ class HashMapTest {
 
     @Test
     void remove() {
+        HashMap<Integer, String> hashMap = new HashMap<>();
         hashMap.put(1, "Val");
         assertEquals("Val", hashMap.remove(1));
         assertFalse(hashMap.containsKey(1));
@@ -45,25 +49,30 @@ class HashMapTest {
 
     @Test
     void size() {
+        HashMap<Integer, String> hashMap = new HashMap<>();
         assertEquals(0, hashMap.size());
     }
 
     @Test
     void iteratorTest() {
-
+        HashMap<Integer, String> hashMap = new HashMap<>();
         ArrayList<String> elements = new ArrayList();
 
         elements.add(hashMap.put(4, "Val4"));
-        elements.add(hashMap.put(5, "Val5"));
-        elements.add(hashMap.put(6, "Val6"));
+        elements.add(hashMap.put(5, "Val7"));
         elements.add(hashMap.put(7, "Val5"));
         elements.add(hashMap.put(8, "Val6"));
 
         Iterator iterator = hashMap.iterator();
 
-        Object next;
+        String next;
         while (iterator.hasNext()) {
-            next = iterator.next();
+            next = (String) iterator.next();
+            System.out.println(next);
+            if(next.equals("Val5")) {
+                iterator.remove();
+            }
         }
+        assertFalse(hashMap.containsKey(7));
     }
 }
