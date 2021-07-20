@@ -2,7 +2,6 @@ package com.iryna.io;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,10 +11,11 @@ class BufferedInputStreamTest {
     @Test
     void readOneSymbolAtTime() {
         String content = "Hello";
-        com.iryna.io.BufferedInputStream byteArrayInputStream = new com.iryna.io.BufferedInputStream(new java.io.ByteArrayInputStream(content.getBytes()));
+        BufferedInputStream byteArrayInputStream = new BufferedInputStream(new java.io.ByteArrayInputStream(content.getBytes()));
         for (int i = 0; i < content.length(); i++) {
             assertEquals(content.charAt(i), (char) byteArrayInputStream.read());
         }
+        assertEquals(-1, byteArrayInputStream.read());
     }
 
     @DisplayName("read Range Of Characters")
@@ -23,7 +23,7 @@ class BufferedInputStreamTest {
     void readRangeOfCharacters() {
         String content = "Hello";
         byte[] res = new byte[10];
-        com.iryna.io.BufferedInputStream byteArrayInputStream = new com.iryna.io.BufferedInputStream(new java.io.ByteArrayInputStream(content.getBytes()));
+        BufferedInputStream byteArrayInputStream = new BufferedInputStream(new java.io.ByteArrayInputStream(content.getBytes()));
         assertEquals(0, byteArrayInputStream.read(res, 0, 0));
         int countReadByte = byteArrayInputStream.read(res, 0, 4);
         assertEquals(4, countReadByte);
@@ -36,9 +36,9 @@ class BufferedInputStreamTest {
     @Test
     void close() throws IOException {
         String content = "Hello";
-        com.iryna.io.ByteArrayInputStream byteArrayInputStream = new com.iryna.io.ByteArrayInputStream(content.getBytes());
-        byteArrayInputStream.close();
-        assertEquals(0, byteArrayInputStream.read());
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(new ByteArrayInputStream(content.getBytes()));
+        bufferedInputStream.close();
+        assertEquals(0, bufferedInputStream.read());
     }
 
     @DisplayName("read To Array")
@@ -46,7 +46,7 @@ class BufferedInputStreamTest {
     void readToArray() throws IOException {
 
         String content = "Hello";
-        java.io.ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(content.getBytes());
+        java.io.ByteArrayInputStream byteArrayInputStream = new java.io.ByteArrayInputStream(content.getBytes());
 
         byte[] bytes = new byte[5];
         int countReadBytes = byteArrayInputStream.read(bytes);
